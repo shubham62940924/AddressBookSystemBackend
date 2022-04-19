@@ -20,7 +20,7 @@ public class AddressBookController {
     private IAddressBookService addressbookservice;
 
     /**
-     *here we use request mapping to tell server is started running
+     *here we use request mapping to tell that server is started running
      * @return
      */
     @RequestMapping(value = {"", "/", "/get"})
