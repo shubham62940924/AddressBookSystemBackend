@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class AddressBookService implements IAddressBookService {
     /**
-     *
+     * Service method for Getting All Addressbook Data from DM
      * @return
      */
     @Override
@@ -44,11 +44,12 @@ public class AddressBookService implements IAddressBookService {
      */
     @Override
     public Contact createContact(ContactDTO contactDTO) {
-        Contact contact = new Contact(3, contactDTO);
+        Contact contact = new Contact(1, contactDTO);
         return contact;
     }
 
     /**
+     * Service method to Add / Create Addressbook Data in DB
      *
      * @param contactId
      * @param contactDTO
@@ -61,7 +62,7 @@ public class AddressBookService implements IAddressBookService {
     }
 
     /**
-     *
+     *Service method for Getting Addressbook Data by ID
      * @param contactId
      */
     @Override

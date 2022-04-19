@@ -4,6 +4,10 @@ package com.blz.addressbook.entity;
 import com.blz.addressbook.dto.ContactDTO;
 
 public class Contact {
+    /**
+     *variables used
+     *
+     */
     private int contactId;
     public String firstName;
     public String lastName;
@@ -13,6 +17,11 @@ public class Contact {
     public String zip;
     public String phone;
 
+    /**
+     *  @param addressbookDTO
+     * @param contactId
+     * @param contactDTO
+     */
     public Contact(int contactId, ContactDTO contactDTO) {
         this.contactId = contactId;
         this.firstName = contactDTO.firstName;
@@ -24,6 +33,10 @@ public class Contact {
         this.phone = contactDTO.phone;
     }
 
+    /**
+     *  @param addressbookDTO
+     * @return
+     */
     public int getContactId() {
         return contactId;
     }
