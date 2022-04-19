@@ -2,6 +2,9 @@ package com.blz.addressbook.service;
 
 import com.blz.addressbook.dto.ContactDTO;
 import com.blz.addressbook.entity.Contact;
+import com.blz.addressbook.exceptions.AddressBookExceptions;
+import com.blz.addressbook.repository.AddressBookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,65 +12,73 @@ import java.util.List;
 
 @Service
 public class AddressBookService implements IAddressBookService {
+
+
+        @Autowired
+        AddressBookRepository addressBookRepository;
+        /**
+         * Service method for Getting All Contact Data
+         * @return
+         */
+        @Override
+        public List<Contact> getContact() {
+
+            return addressBookRepository.findAll();
+        }
+
+        /**
+         *GFet contact by id
+         * @param contactId
+         * @return
+         */
+        @Override
+        public Contact getContactById(long contactId) {
+
+            return addressBookRepository.findById(contactId).
+                    orElseThrow(() -> new AddressBookExceptions("Contact Not Found"));
+        }
+
+        /**
+         *create contact
+         * @param contactDTO
+         * @return
+         */
+        @Override
+        public Contact createContact(ContactDTO contactDTO) {
+            Contact contact = new Contact(contactDTO);
+            return addressBookRepository.save(contact);
+        }
+
+        /**
+         *update contact details
+         * @param contactId
+         * @param contactDTO
+         * @return
+         */
+        @Override
+        public Contact updateContact(long contactId, ContactDTO contactDTO) {
+            Contact contact = this.getContactById(contactId);
+            contact.Contact(contactDTO);
+            return addressBookRepository.save(contact);
+        }
+
+        /**
+         *Deleted contact
+         * @param contactId
+         */
+        @Override
+        public void deleteContact(long contactId) {
+            Contact contact = this.getContactById(contactId);
+            addressBookRepository.delete(contact);
+        }
+
     /**
-     * Service method for Getting All Addressbook Data from DM
+     * calling city by using sql
+     * @param city
      * @return
      */
     @Override
-    public List<Contact> getContact() {
-        List<Contact> contactList = new ArrayList<>();
-        contactList.add(new Contact(1,
-                new ContactDTO("Shubham", "Singh", "varanasi",
-                        "UP", "Varanasi", "221105",
-                        "6380236945")));
-        return contactList;
+        public List<Contact> findAddressBookDataByCity(String city) {
+            return addressBookRepository.findAddressBookDataByCity(city);
+        }
     }
-
-    /**
-     *
-     * @param contactId
-     * @return
-     */
-    @Override
-    public Contact getContactById(int contactId) {
-        Contact contact = new Contact(2,
-                new ContactDTO("Avinash", "Jhadhav",
-                        "Aurangabad", "Maharastara", "Aurangabad",
-                        "45586", "7679157389"));
-        return contact;
-    }
-
-    /**
-     *
-     * @param contactDTO
-     * @return
-     */
-    @Override
-    public Contact createContact(ContactDTO contactDTO) {
-        Contact contact = new Contact(1, contactDTO);
-        return contact;
-    }
-
-    /**
-     * Service method to Add / Create Addressbook Data in DB
-     *
-     * @param contactId
-     * @param contactDTO
-     * @return
-     */
-    @Override
-    public Contact updateContact(int contactId, ContactDTO contactDTO) {
-        Contact contact = new Contact(1, contactDTO);
-        return contact;
-    }
-
-    /**
-     *Service method for Getting Addressbook Data by ID
-     * @param contactId
-     */
-    @Override
-    public void deleteContact(int contactId) {
-
-    }
-}
-

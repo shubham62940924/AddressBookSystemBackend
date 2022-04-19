@@ -31,7 +31,7 @@ public class AddressBookController {
     }
 
     /**
-     *
+     *method for get contacts
      * @param contactId
      * @return
      */
@@ -44,7 +44,7 @@ public class AddressBookController {
     }
 
     /**
-     *
+     *method for create contacts
      * @param contactDTO
      * @return
      */
@@ -57,7 +57,7 @@ public class AddressBookController {
     }
 
     /**
-     *
+     *method for update contacts
      * @param contactId
      * @param contactDTO
      * @return
@@ -72,7 +72,7 @@ public class AddressBookController {
     }
 
     /**
-     *
+     *method for delete contacts
      * @param contactId
      * @return
      */

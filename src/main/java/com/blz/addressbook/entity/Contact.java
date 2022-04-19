@@ -1,14 +1,24 @@
 package com.blz.addressbook.entity;
 
 
-import com.blz.addressbook.dto.ContactDTO;
 
+
+
+
+import com.blz.addressbook.dto.ContactDTO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Data
+@NoArgsConstructor
+@Entity
+@Table(name = "Contact")
 public class Contact {
-    /**
-     *variables used
-     *
-     */
-    private int contactId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     public String firstName;
     public String lastName;
     public String address;
@@ -16,88 +26,20 @@ public class Contact {
     public String city;
     public String zip;
     public String phone;
+    public String email;
 
-    /**
-     *  @param addressbookDTO
-     * @param contactId
-     * @param contactDTO
-     */
-    public Contact(int contactId, ContactDTO contactDTO) {
-        this.contactId = contactId;
-        this.firstName = contactDTO.firstName;
-        this.lastName = contactDTO.lastName;
-        this.address = contactDTO.address;
-        this.state = contactDTO.state;
-        this.city = contactDTO.city;
-        this.zip = contactDTO.zip;
-        this.phone = contactDTO.phone;
+
+    public void Contact(ContactDTO contactDTO) {
+        this.firstName = contactDTO.getFirstName();
+        this.lastName = contactDTO.getLastName();
+        this.address = contactDTO.getAddress();
+        this.city = contactDTO.getCity();
+        this.phone = contactDTO.getPhone();
+        this.zip = contactDTO.getZip();
+        this.state = contactDTO.getState();
+        this.email = contactDTO.getEmail();
     }
-
-    /**
-     *  @param addressbookDTO
-     * @return
-     */
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public Contact(ContactDTO contactDTO){
+        this.Contact(contactDTO);
     }
 }
