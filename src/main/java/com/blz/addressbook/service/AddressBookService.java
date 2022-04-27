@@ -131,7 +131,7 @@ public class AddressBookService implements IAddressBookService {
         boolean matches = bCryptPasswordEncoder.matches(password, userPass.getPassword());
         String token = tokenUtil.createToken(userPass.getId());
         //JMSUtil jmsUtil = new JMSUtil();
-        jmsUtil.sendEmail(email, "this is subject", "this is body");
+        jmsUtil.sendEmail(email, "this is subject", "this is email body");
         return token;
     }
 }
