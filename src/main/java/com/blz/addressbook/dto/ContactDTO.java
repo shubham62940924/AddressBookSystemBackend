@@ -14,9 +14,11 @@ public class ContactDTO {
     public String zip;
     public String phone;
     public String email;
+    public String password;
 
 
     /**
+     *
      * @param firstName
      * @param lastName
      * @param address
@@ -26,7 +28,7 @@ public class ContactDTO {
      * @param phone
      */
     public ContactDTO(String firstName, String lastName, String address, String state, String city, String zip,
-                      String phone, String email) {
+                      String phone, String email, String password) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,14 +38,18 @@ public class ContactDTO {
         this.zip = zip;
         this.phone = phone;
         this.email = email;
+        this.password = password;
     }
 
     /**
+     *
      * @return
      */
     @Override
     public String toString() {
         return "ContactDTO [First Name =" + firstName + ", Last Name =" + lastName + ", Address =" + address
-                + ", State =" + state + ", City =" + city + ", Zip =" + zip + ", Phone =" + phone + ", email =" + email + "]";
+                + ", State =" + state + ", City =" + city + ", Zip =" + zip + ", Phone =" + phone + ", email =" + email
+                +", password =" +password+"]";
     }
+
 }

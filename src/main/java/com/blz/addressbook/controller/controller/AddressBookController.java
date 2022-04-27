@@ -2,6 +2,7 @@ package com.blz.addressbook.controller.controller;
 
 
 import com.blz.addressbook.dto.ContactDTO;
+import com.blz.addressbook.dto.LoginDto;
 import com.blz.addressbook.dto.ResponseDTO;
 import com.blz.addressbook.entity.Contact;
 import com.blz.addressbook.service.IAddressBookService;
@@ -15,12 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/addressbookservice")
 public class AddressBookController {
-
     @Autowired
     private IAddressBookService addressbookservice;
 
     /**
-     *here we use request mapping to tell that server is started running
+     *
      * @return
      */
     @RequestMapping(value = {"", "/", "/get"})
@@ -30,13 +30,14 @@ public class AddressBookController {
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
     }
 
+
     /**
-     *method for get contacts
+     *
      * @param contactId
      * @return
      */
     @GetMapping("/get/{contactId}")
-    public ResponseEntity<ResponseDTO> getContactData(@PathVariable("contactId") int contactId) {
+    public ResponseEntity<ResponseDTO> getContactData(@PathVariable("contactId") long contactId) {
         Contact contact = addressbookservice.getContactById(contactId);
         ResponseDTO response = new ResponseDTO("Get call success for id", contact);
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
@@ -44,7 +45,7 @@ public class AddressBookController {
     }
 
     /**
-     *method for create contacts
+     *
      * @param contactDTO
      * @return
      */
@@ -57,7 +58,40 @@ public class AddressBookController {
     }
 
     /**
-     *method for update contacts
+     *
+     * @param contactDTO
+     * @return
+     */
+    @PostMapping("/user/register")
+    public ResponseEntity<ResponseDTO> registerContactData(@RequestBody ContactDTO contactDTO) {
+//        Contact contact = addressbookservice.createContact(contactDTO);
+//        ResponseDTO response = new ResponseDTO("Register contact data for", contact);
+//        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
+
+        Contact contact = addressbookservice.createContact(contactDTO);
+        if(contact!=null) {
+            ResponseDTO responseDTO = new ResponseDTO("Registered new user in address book", contact);
+            return new ResponseEntity(responseDTO, HttpStatus.OK);
+        }else {
+            return new ResponseEntity("Email id already present", HttpStatus.OK);
+        }
+
+    }
+
+    /**
+     *
+     * @param loginDTO
+     * @return
+     */
+//    @PostMapping("/login/user")
+//    public  ResponseEntity<ResponseDTO> loginUser(@Valid @RequestBody LoginDTO loginDTO){
+//        boolean status = addressbookservice.loginUser(loginDTO.getEmailID(), loginDTO.getPassword());
+//        ResponseDTO responseDTO = new ResponseDTO("Login contact Data for",status);
+//        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
+//    }
+
+    /**
+     *
      * @param contactId
      * @param contactDTO
      * @return
@@ -72,7 +106,7 @@ public class AddressBookController {
     }
 
     /**
-     *method for delete contacts
+     *
      * @param contactId
      * @return
      */
@@ -83,4 +117,22 @@ public class AddressBookController {
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
     }
+    @PostMapping("/login")
+    public  ResponseEntity<ResponseDTO> loginUser(@RequestBody LoginDto loginDTO){
+        boolean matches = addressbookservice.loginUser(loginDTO.getEmail(), loginDTO.getPassword());
+        ResponseDTO responseDTO = null;
+        if (matches){
+            responseDTO = new ResponseDTO("user login succesfull", "welcome");
+        }
+        else {
+            responseDTO = new ResponseDTO("invaild password","retry");
+        }
+        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+    }
+    @PostMapping("/tokenlogin")
+    public ResponseEntity<ResponseDTO> loginWithToken(@RequestBody LoginDto loginDTO){
+        ResponseDTO response = new ResponseDTO( addressbookservice.loginWithToken(loginDTO.getEmail(),loginDTO.getPassword()),"Done");
+        return new ResponseEntity<ResponseDTO>(response,HttpStatus.OK);
+    }
 }
+
