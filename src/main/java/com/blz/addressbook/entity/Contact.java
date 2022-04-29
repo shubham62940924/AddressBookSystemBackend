@@ -57,4 +57,6 @@ public class Contact {
         this.email = contactDTO.getEmail();
         this.password = contactDTO.getPassword();
     }
+
+
 }
